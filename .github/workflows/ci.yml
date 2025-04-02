@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup project
+        run: make setup
+
+      - name: Run tests
+        run: make test
+
+      - name: Lint code
+        run: make lint
